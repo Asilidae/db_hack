@@ -1,28 +1,21 @@
 import random
-
-from datacenter.models import Chastisement
-from datacenter.models import Commendation
-from datacenter.models import Lesson
-from datacenter.models import Mark
-from datacenter.models import Schoolkid
-
-
-def get_schoolkid_object(child_name):
-    child = Schoolkid.objects.get(full_name__contains=child_name)
-    return child
+from datacenter.models import Chastisement, Commendation, Lesson, Mark, Schoolkid
 
 
 def fix_marks(child_name):
+    """Исправление плохих оценок на 5"""
     child = get_schoolkid_object(child_name)
     Mark.objects.filter(schoolkid=child, points__lt=4).update(points=5)
 
 
 def remove_chastisements(child_name):
+    """Удаление замечаний"""
     child = get_schoolkid_object(child_name)
     Chastisement.objects.filter(schoolkid=child).delete()
 
 
 def create_commendation(child_name, subject_name):
+    """Создание похвального отзыва"""
     commendations = [
         'Молодец!',
         'Отлично!',
@@ -65,3 +58,9 @@ def create_commendation(child_name, subject_name):
         subject=last_lesson.subject,
         teacher=last_lesson.teacher
     )
+
+
+def get_schoolkid_object(child_name):
+    """Взятие объекта отдельного ученика"""
+    child = Schoolkid.objects.get(full_name__contains=child_name)
+    return child
