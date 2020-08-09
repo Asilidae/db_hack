@@ -62,12 +62,12 @@ def create_commendation(child_name, subject_name):
 
 def get_schoolkid_object(child_name):
     """Взятие объекта отдельного ученика"""
-	try:
-		child = Schoolkid.objects.get(full_name__contains=child_name)
-		return child_info
+    try:
+	child = Schoolkid.objects.get(full_name__contains=child_name)
+	return child_info
     
-	except Schoolkid.DoesNotExist:
-		print('Такого ученика нет. Введите фамилию и имя полностью.')
+    except Schoolkid.DoesNotExist:
+	print('Такого ученика нет. Введите фамилию и имя полностью.')
 	
-	except Schoolkid.MultipleObjectsReturned:
+    except Schoolkid.MultipleObjectsReturned:
         print('Найдено несколько учеников по вашему запросу. Уточните запрос')
